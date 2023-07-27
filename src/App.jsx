@@ -6,8 +6,8 @@ import Stats from './components/Stats'
 
 
 const initialItems = [
-  { id: 1, description: "Passports", quantity: 2, packed: true },
-  { id: 2, description: "Socks", quantity: 12, packed: false },
+  { id: 1, description: "Passports", quantity: 2, packed: false },
+  { id: 2, description: "Socks", quantity: 3, packed: false },
 ];
 
 function App() {
@@ -25,6 +25,17 @@ function App() {
     setItems(items.filter(item => item.id !== id)) // filter out the id that matches obj id
   }
 
+  const handleToggleItem = (id) => {
+    console.log(id)
+    setItems((items) => items.map((item) => item.id === id ? {
+      ...item,
+      packed: !item.packed
+    } : item ))
+    // both give you the same result
+    // setCount((prev) => count + 1)
+    // setCount(count + 1)
+  }
+
   return (
     <div className='app'>
       <Logo />
@@ -33,8 +44,9 @@ function App() {
         // initialItems={initialItems} no longer need it
         items={items}
         onDeleteItem={handleDeleteItem}
+        onToggle={handleToggleItem}
       />
-      <Stats />
+      <Stats items={items}/>
     </div>
   )
 }
